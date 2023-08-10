@@ -22,7 +22,7 @@ func NewModel(streamer *beep.Ctrl) model {
 	return model{streamer: streamer}
 }
 
-func (m model) Init() (tea.Cmd) {
+func (m model) Init() tea.Cmd {
 	return nil
 }
 
@@ -44,7 +44,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 func (m model) View() string {
 	s := "Drip drop... (space to play/pause, q to quit)\n\n"
-	switch m.streamer.Paused{
+	switch m.streamer.Paused {
 	case true:
 		s += "Paused"
 	default:

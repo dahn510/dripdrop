@@ -8,13 +8,13 @@ Listen to endless rain from your terminal
 
 ## Installation
 
-Build the package using go compiler: `go build`
+Build the package using go compiler: `go build`  
 I have a plan to make this into an AUR package
 
 ## Usage
 
-Just run the binary
-Press space to pause and resume
+Just run the binary  
+Press space to pause and resume  
 Press q to quit
 
 ## Credits
