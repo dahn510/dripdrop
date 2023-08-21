@@ -54,7 +54,7 @@ func (m model) View() string {
 }
 
 func main() {
-	fRain, err := os.Open("resource/rain_loop.flac")
+	fRain, err := os.Open("/usr/local/share/dripdrop/rain_loop.flac")
 	if err != nil {
 		log.Fatal(err)
 	}
