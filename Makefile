@@ -3,9 +3,9 @@ SOUCES := main.go
 
 .PHONY: install
 install: build
-	mkdir -p /usr/local/share/dripdrop
-	cp -f ./resource/rain_loop.flac /usr/local/share/dripdrop/rain_loop.flac
-	cp -f ./dripdrop /bin/dripdrop
+	mkdir -p $(DESTDIR)$(PREFIX)/share/dripdrop
+	install -Dm644 ./resource/rain_loop.flac $(DESTDIR)$(PREFIX)/share/dripdrop/rain_loop.flac
+	install -Dm755 ./dripdrop $(DESTDIR)$(PREFIX)/dripdrop
 
 .PHONY: build
 build: $(SOURCES)
