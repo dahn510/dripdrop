@@ -1,17 +1,21 @@
 package main
 
 import (
+	"bytes"
+	_ "embed"
 	"fmt"
+	tea "github.com/charmbracelet/bubbletea"
 	"log"
 	"os"
 	"time"
-
-	tea "github.com/charmbracelet/bubbletea"
 
 	"github.com/faiface/beep"
 	"github.com/faiface/beep/flac"
 	"github.com/faiface/beep/speaker"
 )
+
+//go:embed resource/rain_loop.flac
+var rainSound []byte
 
 type model struct {
 	streamer *beep.Ctrl
@@ -54,10 +58,8 @@ func (m model) View() string {
 }
 
 func main() {
-	fRain, err := os.Open("/usr/local/share/dripdrop/rain_loop.flac")
-	if err != nil {
-		log.Fatal(err)
-	}
+
+	fRain := bytes.NewReader(rainSound)
 
 	streamerR, format, err := flac.Decode(fRain)
 	if err != nil {
