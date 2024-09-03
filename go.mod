@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/charmbracelet/bubbletea v0.24.2
-	github.com/faiface/beep v1.1.0
+	github.com/gopxl/beep v1.1.0
 )
 
 require (
