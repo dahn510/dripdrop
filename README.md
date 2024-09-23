@@ -22,6 +22,6 @@ Press q to quit
 ## Credits
 
 ### Sound Effects:
-Rain edited to remove loud drops and verly seamless loop: [Ambiance - Heavy Rain Loop](https://freesound.org/s/136971/)
+Rain edited to remove loud drops for seamless loop: [Ambiance - Heavy Rain Loop](https://freesound.org/s/136971/)
 By [DWOBoyle](https://freesound.org/people/DWOBoyle);
 [Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/) license
