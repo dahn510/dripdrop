@@ -1,5 +1,7 @@
 # dripdrop
 
+![pepe chillin](pepe_on_rain.png)
+
 Listen to endless rain from your terminal
 
 ## Requirements
