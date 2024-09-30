@@ -8,6 +8,8 @@ Listen to endless rain from your terminal
 
 [go](https://go.dev)
 
+[whatever the oto package needs](https://github.com/ebitengine/oto?tab=readme-ov-file#prerequisite)
+
 ## Installation
 
 Build the package using go compiler: `go build`  
