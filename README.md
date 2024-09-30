@@ -12,8 +12,10 @@ Listen to endless rain from your terminal
 
 ## Installation
 
-Build the package using go compiler: `go build`  
-I have a plan to make this into an AUR package
+```bash
+go install github.com/dahn510/dripdrop
+```  
+~~I have a plan to make this into an AUR package~~ (not required anymore)
 
 ## Usage
 

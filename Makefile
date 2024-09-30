@@ -1,14 +1,12 @@
 SHELL := bash
-SOUCES := main.go
+SOURCE := main.go
 
 .PHONY: install
-install: build
-	mkdir -p $(DESTDIR)$(PREFIX)/share/dripdrop
-	install -Dm644 ./resource/rain_loop.flac $(DESTDIR)$(PREFIX)/share/dripdrop/rain_loop.flac
-	install -Dm755 ./dripdrop $(DESTDIR)$(PREFIX)/dripdrop
+install: $(SOURCE)
+	go install
 
 .PHONY: build
-build: $(SOURCES)
+build: $(SOURCE)
 	go build
 
 .PHONY: clean
