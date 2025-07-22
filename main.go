@@ -4,12 +4,14 @@ import (
 	"bytes"
 	_ "embed"
 	"fmt"
-	tea "github.com/charmbracelet/bubbletea"
 	"log"
 	"os"
 	"time"
 
+	tea "github.com/charmbracelet/bubbletea"
+
 	"github.com/gopxl/beep"
+	"github.com/gopxl/beep/effects"
 	"github.com/gopxl/beep/flac"
 	"github.com/gopxl/beep/speaker"
 )
@@ -18,12 +20,13 @@ import (
 var rainSound []byte
 
 type model struct {
-	streamer *beep.Ctrl
+	ctrl   *beep.Ctrl
+	volume *effects.Volume
 }
 
-func NewModel(streamer *beep.Ctrl) model {
-	speaker.Play(streamer)
-	return model{streamer: streamer}
+func NewModel(ctrl *beep.Ctrl, volume *effects.Volume) model {
+	speaker.Play(volume)
+	return model{ctrl: ctrl, volume: volume}
 }
 
 func (m model) Init() tea.Cmd {
@@ -34,9 +37,17 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		switch msg.String() {
+		case "+":
+			speaker.Lock()
+			m.volume.Volume += 0.1
+			speaker.Unlock()
+		case "-":
+			speaker.Lock()
+			m.volume.Volume -= 0.1
+			speaker.Unlock()
 		case " ":
 			speaker.Lock()
-			m.streamer.Paused = !m.streamer.Paused
+			m.ctrl.Paused = !m.ctrl.Paused
 			speaker.Unlock()
 		case "ctrl+c", "q":
 			return m, tea.Quit
@@ -47,8 +58,8 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m model) View() string {
-	s := "Drip drop... (space to play/pause, q to quit)\n\n"
-	switch m.streamer.Paused {
+	s := fmt.Sprintf("Drip drop... (space to play/pause, +/-: inc or dec volume, q to quit)\n\nVolume: %.0f ", m.volume.Volume*100)
+	switch m.ctrl.Paused {
 	case true:
 		s += "Paused"
 	default:
@@ -63,14 +74,17 @@ func main() {
 
 	streamerR, format, err := flac.Decode(fRain)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 
 	// load file into memory
 	buffer := beep.NewBuffer(format)
 	buffer.Append(streamerR)
 
-	streamerR.Close() // this closes the source file as well
+	err = streamerR.Close() // this closes the source file as well
+	if err != nil {
+		panic(err)
+	}
 
 	err = speaker.Init(format.SampleRate, format.SampleRate.N(time.Second/10))
 	if err != nil {
@@ -81,7 +95,9 @@ func main() {
 
 	ctrl := &beep.Ctrl{Streamer: rainLoop, Paused: false}
 
-	if _, err := tea.NewProgram(NewModel(ctrl)).Run(); err != nil {
+	volume := &effects.Volume{Streamer: ctrl, Base: 10, Volume: 0, Silent: false}
+
+	if _, err := tea.NewProgram(NewModel(ctrl, volume)).Run(); err != nil {
 		fmt.Printf("Bad thing happened: %s", err)
 		os.Exit(1)
 	}
