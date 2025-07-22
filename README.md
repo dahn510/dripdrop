@@ -15,12 +15,12 @@ Listen to endless rain from your terminal
 ```bash
 go install github.com/dahn510/dripdrop
 ```  
-~~I have a plan to make this into an AUR package~~ (not required anymore)
 
 ## Usage
 
 Just run the binary  
 Press space to pause and resume  
+Press +/- to increase or decrease volume  
 Press q to quit
 
 ## Credits
